@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <title>Weather Forecast</title>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <img src="logo.png" alt="Logo" class="logo">
+            <input type="text" placeholder="Search location" class="search">
+            <div class="options">
+                <button>Weather Model</button>
+                <button>Language</button>
+                <button>Login/Register</button>
+            </div>
+        </header>
+        <main>
+            <div class="map" id="map"></div>
+            <aside>
+                <button>Wind</button>
+                <button>Rain</button>
+                <button>Clouds</button>
+                <button>Waves</button>
+                <button>Air Pressure</button>
+                <button>Temperature</button>
+            </aside>
+        </main>
+        <footer>
+            <input type="range" min="0" max="23" value="0" class="slider" id="timeSlider">
+            <div>
+                <label>
+                    <input type="radio" name="timeUnit" value="hours" checked> Hours
+                </label>
+                <label>
+                    <input type="radio" name="timeUnit" value="days"> Days
+                </label>
+            </div>
+        </footer>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
