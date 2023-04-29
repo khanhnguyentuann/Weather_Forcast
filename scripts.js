@@ -1,107 +1,77 @@
-// Initialize the map
-const map = L.map('map').setView([51.505, -0.09], 13);
+var map;
 
-// Initialize tile layer variable
-let tileLayer;
+function initMap() {
+    map = L.map('map', {
+        zoomControl: false // Tắt nút phóng to/thu nhỏ mặc định
+    }).setView([10.762622, 106.660172], 13); // Tọa độ trung tâm của Thành phố Hồ Chí Minh và mức phóng đại 13
 
-// Add a tile layer (base map) to the map
-tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org">OpenStreetMap</a> contributors'
-}).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19
+    }).addTo(map);
 
-// Add event listeners for the buttons
-document.getElementById('btnWind').addEventListener('click', () => updateMapLayer('wind'));
-document.getElementById('btnRain').addEventListener('click', () => updateMapLayer('rain'));
-document.getElementById('btnClouds').addEventListener('click', () => updateMapLayer('clouds'));
-document.getElementById('btnWaves').addEventListener('click', () => updateMapLayer('waves'));
-document.getElementById('btnAirPressure').addEventListener('click', () => updateMapLayer('pressure'));
-document.getElementById('btnTemperature').addEventListener('click', () => updateMapLayer('temperature'));
+    // Tạo nút phóng to/thu nhỏ mới và đặt bên phải
+    var zoomControl = L.control.zoom({
+        position: 'topright'
+    }).addTo(map);
 
-// Function to update the map layer
-function updateMapLayer(layer) {
-  const layerUrl = getLayerUrl(layer);
-
-  if (map.hasLayer(tileLayer)) {
-    map.removeLayer(tileLayer);
-  }
-
-  if (layer === 'wind') {
-    // Replace the tile layer with the wind layer
-    tileLayer = L.tileLayer('https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=fed32be58df3a0bd09ff4c02c0da7443', {
-      attribution: 'Map data © <a href="https://openweathermap.org">OpenWeatherMap</a>'
-    });
-  } else {
-    // Add a tile layer (base map) to the map
-    tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org">OpenStreetMap</a> contributors'
-    });
-  }
-
-  tileLayer.addTo(map);
+    map.on('click', onMapClick);
 }
 
-// Function to get the URL for the selected layer
-function getLayerUrl(layer) {
-  let layerUrl;
 
-  switch (layer) {
-    case 'wind':
-      // Replace with the URL for the wind layer
-      layerUrl = 'https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=fed32be58df3a0bd09ff4c02c0da7443';
-      break;
-    case 'rain':
-      // Replace with the URL for the rain layer
-      layerUrl = 'https://{s}.tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=fed32be58df3a0bd09ff4c02c0da7443';
-      break;
-    case 'clouds':
-      // Replace with the URL for the clouds layer
-      layerUrl = 'https://{s}.tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=fed32be58df3a0bd09ff4c02c0da7443';
-      break;
-    case 'waves':
-      // Replace with the URL for the waves layer
-      layerUrl = 'https://{s}.tile.openweathermap.org/map/waves_new/{z}/{x}/{y}.png?appid=fed32be58df3a0bd09ff4c02c0da7443';
-      break;
-    case 'pressure':
-      // Replace with the URL for the air pressure layer
-      layerUrl = 'https://{s}.tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=fed32be58df3a0bd09ff4c02c0da7443';
-      break;
-    case 'temperature':
-      // Replace with the URL for the temperature layer
-      layerUrl = 'https://{s}.tile.openweathermap.org/map/tem_new/{z}/{x}/{y}.png?appid=fed32be58df3a0bd09ff4c02c0da7443';
-      break;
-    default:
-      layerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  }
-  return layerUrl;
+document.addEventListener("DOMContentLoaded", function () {
+    initMap();
+});
+
+var shareModal = document.getElementById("share-modal");
+var shareIcon = document.querySelector(".share-icon");
+var closeBtn = document.querySelector(".close");
+
+shareIcon.addEventListener("click", function () {
+    shareModal.style.display = "block";
+});
+
+closeBtn.addEventListener("click", function () {
+    shareModal.style.display = "none";
+});
+
+window.addEventListener("click", function (event) {
+    if (event.target == shareModal) {
+        shareModal.style.display = "none";
+    }
+});
+
+function onMapClick(e) {
+    // Thay 'your_api_key' bằng API key của bạn từ OpenWeatherMap
+    var api_key = 'fed32be58df3a0bd09ff4c02c0da7443';
+    var lat = e.latlng.lat;
+    var lon = e.latlng.lng;
+
+    var url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`;
+
+    // Gửi yêu cầu lấy dữ liệu thời tiết từ OpenWeatherMap
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            var temperature = data.main.temp;
+            var humidity = data.main.humidity;
+            var wind_speed = data.wind.speed;
+
+            // Hiển thị thông tin thời tiết trong một cửa sổ bật lên trên bản đồ
+            var popupContent = `
+          <div>
+            <h3>Thời tiết:</h3>
+            <p>Nhiệt độ: ${temperature} °C</p>
+            <p>Độ ẩm: ${humidity}%</p>
+            <p>Tốc độ gió: ${wind_speed} m/s</p>
+          </div>
+        `;
+            L.popup()
+                .setLatLng(e.latlng)
+                .setContent(popupContent)
+                .openOn(map);
+        })
+        .catch(error => {
+            console.error('Error fetching weather data:', error);
+        });
 }
-
-// Initialize weather markers layer group
-let weatherMarkers = L.layerGroup();
-
-// Fetch and display weather data on the map
-function updateWeatherData() {
-  // Replace this with the API endpoint for your weather data
-  // For this example, I'm using OpenWeatherMap API with a placeholder for your API key
-  // Replace 'YOUR_API_KEY' with your actual API key
-  const apiUrl = 'https://api.openweathermap.org/data/2.5/weather?lat=51.505&lon=-0.09&appid=fed32be58df3a0bd09ff4c02c0da7443';
-
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      // Remove any existing weather markers from the map
-      if (map.hasLayer(weatherMarkers)) {
-        map.removeLayer(weatherMarkers);
-      }
-      // Create a new layer group for weather markers
-      weatherMarkers = L.layerGroup();
-      // Add weather markers to the map based on the fetched data
-      const marker = L.marker([data.coord.lat, data.coord.lon]);
-      marker.bindPopup(`<strong>${data.name}</strong><br>Temperature: ${data.main.temp}`);
-      weatherMarkers.addLayer(marker);
-
-      // Add the weather markers layer group to the map
-      weatherMarkers.addTo(map);
-    });
-}
-// Update the weather data when the page loads
-updateWeatherData();

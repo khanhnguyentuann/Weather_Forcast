@@ -1,57 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
-
     <link rel="stylesheet" href="styles.css">
     <title>Weather Forecast</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Tùy chỉnh nút phóng to/thu nhỏ */
+        .leaflet-control-zoom a {
+            background-color: #333;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 26px;
+            width: 300px;
+            height: 30px;
+            display: block;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <img src="src/icons/logo.png" alt="Logo" class="logo">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Tìm kiếm địa điểm...">
-                <button id="searchBtn">Tìm kiếm</button>
-            </div>
-            <div class="options">
-                <button>Weather Model</button>
-                <button>Language</button>
-                <button>Login/Register</button>
-            </div>
-        </header>
-        <main>
-            <div class="map" id="map"></div>
-            <aside>
-                <button id="btnWind">Wind</button>
-                <button id="btnRain">Rain</button>
-                <button id="btnClouds">Clouds</button>
-                <button id="btnWaves">Waves</button>
-                <button id="btnAirPressure">Air Pressure</button>
-                <button id="btnTemperature">Temperature</button>
-            </aside>
-        </main>
-        <footer>
-            <input type="range" min="0" max="23" value="0" class="slider" id="timeSlider">
-            <div>
-                <label>
-                    <input type="radio" name="timeUnit" value="hours" checked> Hours
-                </label>
-                <label>
-                    <input type="radio" name="timeUnit" value="days"> Days
-                </label>
-            </div>
-        </footer>
+    <div id="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
+    <div id="search-container">
+        <i class="fa fa-search search-icon"></i>
+        <input type="text" id="location-search" placeholder="Search location" />
+    </div>
+    <div class="share-icon">
+        <i class="fa fa-share"></i>
+    </div>
+    <!-- Thêm dòng chữ tên web và biểu tượng -->
+    <div class="site-title">
+        <i class="fa fa-sun-o"></i> Weather Forcast
+    </div>
+    <!-- Thêm nút đăng nhập và biểu tượng -->
+    <div class="login-btn">
+        <i class="fa fa-user"></i> Login
+    </div>
+    <!-- Thêm thanh layer -->
+    <div class="layer-panel">
+        <div class="layer-item">
+            <i class="fa fa-flag"></i> Wind
+        </div>
+        <div class="layer-item">
+            <i class="fa fa-tint"></i> Rain
+        </div>
+        <div class="layer-item">
+            <i class="fa fa-thermometer-half"></i> Temp
+        </div>
+        <div class="layer-item">
+            <i class="fa fa-cloud"></i> Clouds
+        </div>
+        <div class="layer-item">
+            <i class="fa fa-ship"></i> Wave
+        </div>
+        <div class="layer-item">
+            <i class="fa fa-tree"></i> Air
+        </div>
+        <div class="layer-item">
+            <i class="fa fa-plus"></i> More...
+        </div>
+    </div>
+
+    <div id="share-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Chia sẻ</h2>
+            <p>Nhấn vào biểu tượng bên dưới để chia sẻ:</p>
+            <div class="share-buttons">
+                <a href="#"><i class="fa fa-facebook"></i>Facebook</a>
+                <a href="#"><i class="fa fa-twitter"></i>Twitter</a>
+                <a href="#"><i class="fa fa-linkedin"></i>LinkedIn</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="map"></div>
     <script src="scripts.js"></script>
 </body>
 
