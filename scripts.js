@@ -70,12 +70,40 @@ function setUserLocation(lat, lon) {
 }
 
 function showCurrentLocationPopup(lat, lon) {
-    var popupContent = `<div><h3>Bạn đang ở đây!</h3><p>Vĩ độ: ${lat}</p><p>Kinh độ: ${lon}</p></div>`;
+    var url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`;
 
-    L.popup()
-        .setLatLng([lat, lon])
-        .setContent(popupContent)
-        .openOn(map);
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            var wind_speed = data.wind && data.wind.speed ? data.wind.speed + " m/s" : "N/A";
+            var rain_1h = data.rain && data.rain['1h'] ? data.rain['1h'] + " mm" : "N/A";
+            var temperature = data.main && data.main.temp ? data.main.temp + " °C" : "N/A";
+            var clouds = data.clouds && data.clouds.all ? data.clouds.all + " %" : "N/A";
+            var air_pressure = data.main && data.main.pressure ? data.main.pressure + " hPa" : "N/A";
+            var humidity = data.main && data.main.humidity ? data.main.humidity + " %" : "N/A";
+
+            var popupContent = `
+                <div>
+                    <h3>Bạn đang tại ${data.name}!</h3>
+                    <p>Vĩ độ: ${lat}</p>
+                    <p>Kinh độ: ${lon}</p>
+                    <p>Tốc độ gió: ${wind_speed}</p>
+                    <p>Lượng mưa 1h: ${rain_1h}</p>
+                    <p>Nhiệt độ: ${temperature}</p>
+                    <p>Mây che phủ: ${clouds}</p>
+                    <p>Áp suất không khí: ${air_pressure}</p>
+                    <p>Độ ẩm: ${humidity}</p>
+                </div>
+            `;
+
+            L.popup()
+                .setLatLng([lat, lon])
+                .setContent(popupContent)
+                .openOn(map);
+        })
+        .catch(error => {
+            console.error('Error fetching weather data:', error);
+        });
 }
 
 function onMapClick(e) {
