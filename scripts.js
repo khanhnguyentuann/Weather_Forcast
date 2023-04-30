@@ -1,12 +1,13 @@
 var map, rainLayer, windLayer, tempLayer, cloudsLayer, airLayer;
 var api_key = 'c9c8e558cd1dad0583f2600da8c72b7e';
+var currentLocationMarker, clickedLocationMarker;
 
 function initMap() {
-    map = L.map('map', {zoomControl: false}).setView([10.762622, 106.660172], 13);
+    map = L.map('map', { zoomControl: false }).setView([10.762622, 106.660172], 13);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19}).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
 
-    L.control.zoom({position: 'topright'}).addTo(map);
+    L.control.zoom({ position: 'topright' }).addTo(map);
 
     map.on('click', onMapClick);
 
@@ -16,7 +17,25 @@ function initMap() {
     addLayerToggle("clouds", cloudsLayer);
     addLayerToggle("air", airLayer);
     // addLayerToggle("humidity", humidityLayer);
+
+    getUserLocation();
 }
+
+function getUserLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                setUserLocation(position.coords.latitude, position.coords.longitude);
+            },
+            function (error) {
+                console.error('Error getting user location:', error);
+            }
+        );
+    } else {
+        console.error('Geolocation is not supported by this browser.');
+    }
+}
+
 
 function addLayerToggle(id, layer) {
     document.getElementById(id).addEventListener("click", function () {
@@ -38,9 +57,23 @@ function createTileLayer(urlTemplate) {
     });
 }
 
+function setUserLocation(lat, lon) {
+    map.setView([lat, lon], 13);
+    if (currentLocationMarker) {
+        map.removeLayer(currentLocationMarker);
+    }
+    currentLocationMarker = L.marker([lat, lon], { icon: L.icon({ iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png', iconSize: [25, 41], iconAnchor: [12, 41] }) }).addTo(map);
+}
+
 function onMapClick(e) {
     var lat = e.latlng.lat;
     var lon = e.latlng.lng;
+
+
+    if (clickedLocationMarker) {
+        map.removeLayer(clickedLocationMarker);
+    }
+    clickedLocationMarker = L.marker([lat, lon], { icon: L.icon({ iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', iconSize: [25, 41], iconAnchor: [12, 41] }) }).addTo(map);
 
     var url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`;
 
