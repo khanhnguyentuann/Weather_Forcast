@@ -63,6 +63,19 @@ function setUserLocation(lat, lon) {
         map.removeLayer(currentLocationMarker);
     }
     currentLocationMarker = L.marker([lat, lon], { icon: L.icon({ iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png', iconSize: [25, 41], iconAnchor: [12, 41] }) }).addTo(map);
+
+    currentLocationMarker.on('click', function () {
+        showCurrentLocationPopup(lat, lon);
+    });
+}
+
+function showCurrentLocationPopup(lat, lon) {
+    var popupContent = `<div><h3>Bạn đang ở đây!</h3><p>Vĩ độ: ${lat}</p><p>Kinh độ: ${lon}</p></div>`;
+
+    L.popup()
+        .setLatLng([lat, lon])
+        .setContent(popupContent)
+        .openOn(map);
 }
 
 function onMapClick(e) {
