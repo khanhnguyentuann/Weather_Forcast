@@ -9,6 +9,10 @@
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <style>
         /* Tùy chỉnh nút phóng to/thu nhỏ */
         .leaflet-control-zoom a {
@@ -36,6 +40,7 @@
     <div id="search-container">
         <i class="fa fa-search search-icon"></i>
         <input type="text" id="location-search" placeholder="Search location" />
+        <div id="search-results"></div>
     </div>
     <div class="share-icon">
         <i class="fa fa-share"></i>
@@ -85,7 +90,8 @@
     </div>
 
     <div id="map"></div>
-    <script src="scripts.js"></script>
+    <script src="map.js"></script>
+    <script src="search.js"></script>
 </body>
 
 </html>
