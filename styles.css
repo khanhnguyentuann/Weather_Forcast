@@ -217,8 +217,8 @@ html {
   color: #333;
 }
 
-.login-btn i {
-  margin-right: 5px;
+.login-btn .fa {
+  padding-left: 7px;
 }
 
 /* Định dạng vị trí và kiểu dáng của thanh layer */
@@ -283,4 +283,14 @@ html {
 
 .weather-details {
   margin-top: 10px;
+}
+
+.welcome-msg {
+  position: absolute;
+  top: 10px;
+  right: 150px;
+  font-size: 18px;
+  color: black;
+  z-index: 5;
+  font-weight: bold;
 }

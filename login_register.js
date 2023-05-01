@@ -27,6 +27,7 @@ $(document).ready(function () {
                 // Nếu kết quả trả về là "success", chuyển hướng đến trang chính
                 if (response == 'success') {
                     sessionStorage.setItem('loggedIn', 'true');
+                    sessionStorage.setItem('username', username);
                     window.location.href = 'main.html';
                 } else {
                     // Ngược lại, hiển thị thông báo lỗi

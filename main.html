@@ -54,9 +54,12 @@
     <div class="site-title">
         <i class="fa fa-sun-o"></i> Weather Forcast
     </div>
+    <div class="welcome-msg">
+        Xin chào, <span id="current-user">Người dùng</span>!
+    </div>
     <!-- Thêm nút đăng nhập và biểu tượng -->
     <div class="login-btn">
-        <i class="fa fa-user"></i> Log Out
+        Log Out <i class="fa fa-sign-out"></i>
     </div>
     <!-- Thêm thanh layer -->
     <div class="layer-panel">
@@ -97,6 +100,11 @@
     <div id="map"></div>
     <script src="map.js"></script>
     <script src="search.js"></script>
+    <script>
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+            document.getElementById('current-user').textContent = sessionStorage.getItem('username');
+        }
+    </script>
 </body>
 
 </html>
