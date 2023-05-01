@@ -9,34 +9,45 @@ function initMap() {
 
 document.addEventListener('DOMContentLoaded', initMap);
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Xử lý form đăng nhập
-    $('#login-form').submit(function(event) {
+    $('#login-form').submit(function (event) {
         event.preventDefault();
-        sessionStorage.setItem('loggedIn', 'true');
-        window.location.href = 'main.html';
+
+        // Lấy giá trị từ các trường tên đăng nhập và mật khẩu
+        var username = $('#username').val();
+        var password = $('#password').val();
+
+        // Gửi yêu cầu Ajax đến máy chủ để kiểm tra thông tin đăng nhập
+        $.ajax({
+            url: 'http://localhost:5000/check-login',
+            type: 'POST',
+            data: { username: username, password: password },
+            success: function (response) {
+                // Nếu kết quả trả về là "success", chuyển hướng đến trang chính
+                if (response == 'success') {
+                    sessionStorage.setItem('loggedIn', 'true');
+                    window.location.href = 'main.html';
+                } else {
+                    // Ngược lại, hiển thị thông báo lỗi
+                    alert('Tên đăng nhập hoặc mật khẩu không đúng.');
+                }
+            }
+        });
     });
 
     // Xử lý chuyển hướng đến trang đăng ký
-    $('#register-link').click(function() {
+    $('#register-link').click(function () {
         window.location.href = 'register.html';
     });
 
-    // Xử lý chuyển hướng đến trang quên mật khẩu
-    $('#forgot-password-link').click(function() {
-        window.location.href = 'forgot-password.html';
-    });
-
     // Xử lý form đăng ký
-    $('#register-form').submit(function(event) {
+    $('#register-form').submit(function (event) {
         event.preventDefault();
-        // Thêm xử lý đăng ký tại đây
-        // Ví dụ: kiểm tra thông tin đăng ký, gửi thông tin đến máy chủ, ...
-        alert('Đăng ký thành công!'); // Thông báo tạm thời
+        alert('Đăng ký thành công!');
     });
 
-    // Xử lý chuyển hướng đến trang đăng nhập
-    $('#login-link').click(function() {
+    $('#login-link').click(function () {
         window.location.href = 'login.html';
     });
 });
