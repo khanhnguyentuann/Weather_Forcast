@@ -193,7 +193,7 @@ html {
   margin-right: 8px;
 }
 
-/* Định dạng nút đăng nhập và biểu tượng */
+/* Định dạng nút đăng xuất và biểu tượng */
 .logout-btn {
   position: fixed;
   top: 10px;
