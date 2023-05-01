@@ -58,7 +58,7 @@
         Xin chào, <span id="current-user">Người dùng</span>!
     </div>
     <!-- Thêm nút đăng nhập và biểu tượng -->
-    <div class="login-btn">
+    <div class="logout-btn" id="logout-btn">
         Log Out <i class="fa fa-sign-out"></i>
     </div>
     <!-- Thêm thanh layer -->
@@ -101,9 +101,17 @@
     <script src="map.js"></script>
     <script src="search.js"></script>
     <script>
+        // Hiện dòng xin chào user đang đăng nhập
         if (sessionStorage.getItem('loggedIn') === 'true') {
             document.getElementById('current-user').textContent = sessionStorage.getItem('username');
         }
+
+        // Đăng xuất
+        document.getElementById('logout-btn').addEventListener('click', function () {
+            sessionStorage.removeItem('loggedIn');
+            window.location.href = 'login.html';
+        });
+
     </script>
 </body>
 
