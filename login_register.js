@@ -1,7 +1,7 @@
 function initMap() {
     var map = L.map('map', { zoomControl: false }).setView([14.0583, 108.2772], 5);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',maxZoom: 18}).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 18 }).addTo(map);
 
     L.control.zoom({ position: 'topright' }).addTo(map);
 }
@@ -13,7 +13,6 @@ $(document).ready(function () {
     $('#login-form').submit(function (event) {
         event.preventDefault();
 
-        // Lấy giá trị từ các trường tên đăng nhập và mật khẩu
         var username = $('#username').val();
         var password = $('#password').val();
 
@@ -36,15 +35,41 @@ $(document).ready(function () {
         });
     });
 
-    // Xử lý chuyển hướng đến trang đăng ký
-    $('#register-link').click(function () {
-        window.location.href = 'register.html';
-    });
-
     // Xử lý form đăng ký
     $('#register-form').submit(function (event) {
         event.preventDefault();
-        alert('Đăng ký thành công!');
+
+        var username = $('#username').val();
+        var email = $('#email').val();
+        var password = $('#password').val();
+        var confirmPassword = $('#confirm-password').val();
+
+        if (password !== confirmPassword) {
+            alert('Mật khẩu xác nhận không khớp.');
+            return;
+        }
+
+        $.ajax({
+            url: 'http://localhost:5000/register',
+            type: 'POST',
+            data: {
+                username: username,
+                email: email,
+                password: password
+            },
+            success: function (response) {
+                if (response == 'success') {
+                    alert('Đăng ký thành công!');
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Tên người dùng đã tồn tại. Vui lòng chọn tên đăng nhập khác.');
+                }
+            }
+        });
+    });
+
+    $('#register-link').click(function () {
+        window.location.href = 'register.html';
     });
 
     $('#login-link').click(function () {

@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <style>
-        /* Tùy chỉnh nút phóng to/thu nhỏ */
         .leaflet-control-zoom a {
             background-color: #333;
             color: #fff;
@@ -23,6 +22,14 @@
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        .close-login {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 25px;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -33,6 +40,7 @@
         <i class="fa fa-sun-o"></i> Weather Forcast
     </div>
     <div class="login-container" style="display: none;">
+        <div class="close-login">&times;</div>
         <h2>Đăng nhập</h2>
         <form id="login-form">
             <label for="username">Tên đăng nhập:</label>
@@ -50,6 +58,9 @@
         $(document).ready(function () {
             $('.login-btn').click(function () {
                 $('.login-container').show();
+            });
+            $('.close-login').click(function () {
+                $('.login-container').hide();
             });
         });
     </script>

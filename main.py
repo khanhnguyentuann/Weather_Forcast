@@ -32,6 +32,31 @@ def check_login():
     else:
         return 'failure'
 
+# Xử lý yêu cầu đăng ký
+@app.route('/register', methods=['POST'])
+def register():
+    # Lấy thông tin đăng ký từ yêu cầu POST
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
+
+    # Kiểm tra xem tên người dùng đã tồn tại chưa
+    cursor = db_connection.cursor()
+    query = "SELECT * FROM users WHERE username = %s"
+    cursor.execute(query, (username,))
+    result = cursor.fetchone()
+
+    if result:
+        return 'failure'
+
+    # Thêm người dùng mới vào cơ sở dữ liệu
+    query = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
+    cursor.execute(query, (username, email, password))
+    db_connection.commit()
+
+    # Trả về 'success' nếu đăng ký thành công
+    return 'success'
+
 
 if __name__ == '__main__':
     app.run(debug=True)
