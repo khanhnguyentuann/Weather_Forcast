@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <style>
-        /* Tùy chỉnh nút phóng to/thu nhỏ */
         .leaflet-control-zoom a {
             background-color: #333;
             color: #fff;
@@ -23,10 +22,26 @@
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 25px;
+            cursor: pointer;
+            z-index: 5;
+            background-color: #333;
+            color: #fff;
+            width: 50px;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
+    <div class="back-button">
+        <i class="fas fa-arrow-left"></i>
+    </div>
     <div id="map"></div>
     <div class="site-title">
         <i class="fa fa-sun-o"></i> Weather Forcast
@@ -48,6 +63,11 @@
             <a href="#" id="login-link">Đã có tài khoản? Đăng nhập</a>
         </div>
     </div>
+    <script>
+        $('.back-button').click(function () {
+            window.location.href = 'login.html';
+        });
+    </script>
     <script src="login_register.js"></script>
 </body>
 
