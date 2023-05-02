@@ -74,6 +74,7 @@ async function fetchWeatherData(lat, lon) {
     }
 }
 
+
 async function showWeatherPopup(lat, lon, title, marker) {
     const data = await fetchWeatherData(lat, lon);
     if (data) {
@@ -128,6 +129,8 @@ async function onMapClick(e) {
     }
     clickedLocationMarker = L.marker([lat, lon], { icon: L.icon({ iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', iconSize: [25, 41], iconAnchor: [12, 41] }) }).addTo(map);
     await showWeatherPopup(lat, lon, "Thời tiết tại", clickedLocationMarker);
+    await showWeatherForecast(lat, lon);
+
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -154,3 +157,59 @@ function setupShareModal() {
 }
 
 setupShareModal();
+
+async function fetchWeatherForecast(lat, lon) {
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${api_key}&units=metric`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching weather forecast:', error);
+        return null;
+    }
+}
+
+async function showWeatherForecast(lat, lon) {
+    const data = await fetchWeatherForecast(lat, lon);
+    if (data) {
+        let forecastHTML = `
+            <div class='forecast-container'>
+                <button class='close-button'>&times;</button>
+        `;
+
+        for (let i = 0; i < data.list.length; i += 8) {
+            const forecast = data.list[i];
+            const date = new Date(forecast.dt * 1000).toLocaleDateString();
+            const temperature = forecast.main.temp ? forecast.main.temp + " °C" : "N/A";
+            const humidity = forecast.main.humidity ? forecast.main.humidity + " %" : "N/A";
+            const wind_speed = forecast.wind.speed ? forecast.wind.speed + " m/s" : "N/A";
+            const weatherIcon = forecast.weather[0].icon ? `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png` : "";
+            const weatherDescription = forecast.weather[0].description ? forecast.weather[0].description.charAt(0).toUpperCase() + forecast.weather[0].description.slice(1) : "";
+
+            forecastHTML += `
+                <div class='forecast-item'>
+                    <h4>Dự báo thời tiết: ${date}</h4>
+                    <span>
+                        <img src="${weatherIcon}" alt="${weatherDescription}" width="50" height="50" />
+                        <span>${weatherDescription}</span>
+                    </span>
+                    <p>Nhiệt độ: ${temperature}</p>
+                    <p>Độ ẩm: ${humidity}</p>
+                    <p>Tốc độ gió: ${wind_speed}</p>
+                </div>
+            `;
+        }
+        forecastHTML += "</div>";
+
+        const forecastElement = document.getElementById("forecast");
+        forecastElement.innerHTML = forecastHTML;
+        forecastElement.style.display = "block";
+
+        // Add event listener to the close button
+        const closeButton = document.querySelector('.forecast-container .close-button');
+        closeButton.addEventListener('click', function () {
+            forecastElement.style.display = "none";
+        });
+    }
+}

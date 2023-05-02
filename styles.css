@@ -53,7 +53,8 @@ html {
   transform: translateY(-50%);
   font-size: 18px;
   color: white;
-  pointer-events: none; /* Đặt thành none để không ảnh hưởng đến việc nhấp vào input */
+  pointer-events: none;
+  /* Đặt thành none để không ảnh hưởng đến việc nhấp vào input */
 }
 
 /*Định dạng vị trí và kích thước của khung tìm kiếm địa điểm */
@@ -68,7 +69,8 @@ html {
   width: 200px;
   height: 22px;
   padding: 5px;
-  padding-left: 30px; /* Tăng khoảng cách bên trái để không bị biểu tượng kính lúp che chữ */
+  padding-left: 30px;
+  /* Tăng khoảng cách bên trái để không bị biểu tượng kính lúp che chữ */
   font-size: 14px;
   border-radius: 3px;
   background-color: #333;
@@ -294,4 +296,57 @@ html {
   background-color: #fff;
   z-index: 5;
   font-weight: bold;
+}
+
+.forecast-container {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  width: calc(100% - 40px);
+  margin-left: 10px;
+  margin-right: 10px;
+  z-index: 1000;
+}
+
+.forecast-item {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 1px;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  flex: 1;
+  max-width: calc(20% - 20px);
+  margin-left: 5px;
+  /* Sửa dòng này */
+  margin-right: 5px;
+  /* Thêm dòng này */
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.forecast-item:last-child {
+  margin-right: 5px;
+  /* Thêm dòng này */
+}
+
+.forecast-item p {
+  line-height: 0.9;
+}
+
+.close-button {
+  position: absolute;
+  top: 2px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
 }
