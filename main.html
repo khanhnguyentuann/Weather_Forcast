@@ -30,15 +30,36 @@
 
 <body>
     <script>if (sessionStorage.getItem('loggedIn') !== 'true') window.location.href = 'login.html';</script>
-    <!-- Thêm nút menu -->
     <button class="menu-icon" onclick="toggleDropdown()">☰</button>
-
-    <!-- Thêm menu dropdown -->
     <div id="myDropdown" class="dropdown">
         <a href="#">Xem ưa thích</a>
-        <a href="#">Thiết lập ưa thích</a>
+        <a href="#" id="setup-favorites">Thiết lập ưa thích</a>
         <a href="#">Xem cảnh báo</a>
         <a href="#">Thiết lập cảnh báo</a>
+    </div>
+    <div id="favorites-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="favorites-modal-close">&times;</span>
+            <h2>Thiết lập ưa thích</h2>
+            <p>Chọn loại thời tiết ưa thích:</p>
+            <select id="weather-type">
+                <option value="nang">Nắng</option>
+                <option value="mua">Mưa</option>
+                <option value="may">Mây</option>
+                <option value="tuyet">Tuyết</option>
+                <option value="gio">Gió</option>
+            </select>
+            <p>Chọn vùng:</p>
+            <select id="region">
+                <option value="asia">Châu Á</option>
+                <option value="europe">Châu Âu</option>
+                <option value="north-america">Bắc Mỹ</option>
+                <option value="south-america">Nam Mỹ</option>
+                <option value="africa">Châu Phi</option>
+                <option value="oceania">Châu Đại Dương</option>
+            </select>
+            <button id="save-favorites">Lưu ưa thích</button>
+        </div>
     </div>
     <div id="search-container">
         <i class="fa fa-search search-icon"></i>
@@ -69,45 +90,8 @@
         </div>
     </div>
     <div id="map"></div>
-    <script src="map.js"></script>
-    <script src="search.js"></script>
-    <script>
-        // Wait for the DOM to finish loading before attaching handlers
-        document.addEventListener('DOMContentLoaded', function () {
-            var currentUserEl = document.getElementById('current-user');
-            var logoutBtn = document.getElementById('logout-btn');
-            var menuIcon = document.querySelector('.menu-icon');
-            var dropdown = document.getElementById('myDropdown');
-
-            // Set current user if logged in
-            if (sessionStorage.getItem('loggedIn') === 'true') {
-                currentUserEl.textContent = sessionStorage.getItem('username');
-            }
-
-            // Logout handler
-            logoutBtn.addEventListener('click', function () {
-                sessionStorage.removeItem('loggedIn');
-                window.location.href = 'login.html';
-            });
-
-            // Toggle dropdown menu
-            function toggleDropdown() {
-                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-            }
-
-            // Click handler for dropdown and menu icon
-            function clickHandler(event) {
-                if (event.target === menuIcon) {
-                    toggleDropdown();
-                } else if (!event.target.closest('.dropdown')) {
-                    dropdown.style.display = 'none';
-                }
-            }
-
-            // Add click event listener to the window
-            window.addEventListener('click', clickHandler);
-        });
-    </script>
+    <script src="main_map.js"></script>
+    <script src="menu_bar.js"></script>
 </body>
 
 </html>
