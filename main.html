@@ -2,19 +2,17 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="styles.css">
     <title>Weather Forecast</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="">
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <style>
-        /* Tùy chỉnh nút phóng to/thu nhỏ */
         .leaflet-control-zoom a {
             background-color: #333;
             color: #fff;
@@ -28,92 +26,87 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
-
 </head>
 
 <body>
-    <script>
-        if (sessionStorage.getItem('loggedIn') !== 'true') {
-            window.location.href = 'login.html';
-        }
-    </script>
-    <div id="menu-icon">
-        <span></span>
-        <span></span>
-        <span></span>
+    <script>if (sessionStorage.getItem('loggedIn') !== 'true') window.location.href = 'login.html';</script>
+    <!-- Thêm nút menu -->
+    <button class="menu-icon" onclick="toggleDropdown()">☰</button>
+
+    <!-- Thêm menu dropdown -->
+    <div id="myDropdown" class="dropdown">
+        <a href="#">Xem ưa thích</a>
+        <a href="#">Thiết lập ưa thích</a>
+        <a href="#">Xem cảnh báo</a>
+        <a href="#">Thiết lập cảnh báo</a>
     </div>
     <div id="search-container">
         <i class="fa fa-search search-icon"></i>
-        <input type="text" id="location-search" placeholder="Search location" />
+        <input type="text" id="location-search" placeholder="Search location">
         <div id="search-results"></div>
     </div>
-    <!-- Bảng dự báo thoi tiet-->
-    <div id="forecast" style="display: none;"></div>
-    <div class="share-icon">
-        <i class="fa fa-share"></i>
-    </div>
-    <!-- Thêm dòng chữ tên web và biểu tượng -->
-    <div class="site-title">
-        <i class="fa fa-sun-o"></i> Weather Forcast
-    </div>
-    <div class="welcome-container">
-        Xin chào, <span id="current-user">Người dùng</span>!
-    </div>
-    <!-- Thêm nút đăng nhập và biểu tượng -->
-    <div class="logout-btn" id="logout-btn">
-        Log Out <i class="fa fa-sign-out"></i>
-    </div>
-    <!-- Thêm thanh layer -->
+    <div id="forecast" style="display:none"></div>
+    <div class="share-icon"><i class="fa fa-share"></i></div>
+    <div class="site-title"><i class="fa fa-sun-o"></i>Weather Forcast</div>
+    <div class="welcome-container">Xin chào, <span id="current-user">Người dùng</span>!</div>
+    <div class="logout-btn" id="logout-btn">Log Out <i class="fa fa-sign-out"></i></div>
     <div class="layer-panel">
-        <div class="layer-item" id="wind">
-            <i class="fa fa-flag"></i> Wind
-        </div>
-        <div class="layer-item" id="rain">
-            <i class="fa fa-tint"></i> Rain
-        </div>
-        <div class="layer-item" id="temp">
-            <i class="fa fa-thermometer-half"></i> Temp
-        </div>
-        <div class="layer-item" id="clouds">
-            <i class="fa fa-cloud"></i> Clouds
-        </div>
-        <div class="layer-item" id="air">
-            <i class="fa fa-tree"></i> Air
-        </div>
-        <!-- <div class="layer-item" id="humidity">
-            <i class="fa fa-tint"></i> Humidity
-        </div> -->
+        <div class="layer-item" id="wind"><i class="fa fa-flag"></i>Wind</div>
+        <div class="layer-item" id="rain"><i class="fa fa-tint"></i>Rain</div>
+        <div class="layer-item" id="temp"><i class="fa fa-thermometer-half"></i>Temp</div>
+        <div class="layer-item" id="clouds"><i class="fa fa-cloud"></i>Clouds</div>
+        <div class="layer-item" id="air"><i class="fa fa-tree"></i>Air</div>
     </div>
-
     <div id="share-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Chia sẻ</h2>
-            <p>Nhấn vào biểu tượng bên dưới để chia sẻ:</p>
-            <div class="share-buttons">
-                <a href="#"><i class="fa fa-facebook"></i>Facebook</a>
-                <a href="#"><i class="fa fa-twitter"></i>Twitter</a>
-                <a href="#"><i class="fa fa-linkedin"></i>LinkedIn</a>
-            </div>
+            <h2>Chia sẻ <p>Nhấn vào biểu tượng bên dưới để chia sẻ:</p>
+                <div class="share-buttons">
+                    <a href="#"><i class="fa fa-facebook"></i>Facebook</a>
+                    <a href="#"><i class="fa fa-twitter"></i>Twitter</a>
+                    <a href="#"><i class="fa fa-linkedin"></i>LinkedIn</a>
+                </div>
         </div>
-
     </div>
-
     <div id="map"></div>
     <script src="map.js"></script>
     <script src="search.js"></script>
     <script>
-        // Hiện dòng xin chào user đang đăng nhập
-        if (sessionStorage.getItem('loggedIn') === 'true') {
-            document.getElementById('current-user').textContent = sessionStorage.getItem('username');
-        }
+        // Wait for the DOM to finish loading before attaching handlers
+        document.addEventListener('DOMContentLoaded', function () {
+            var currentUserEl = document.getElementById('current-user');
+            var logoutBtn = document.getElementById('logout-btn');
+            var menuIcon = document.querySelector('.menu-icon');
+            var dropdown = document.getElementById('myDropdown');
 
-        // Đăng xuất
-        document.getElementById('logout-btn').addEventListener('click', function () {
-            sessionStorage.removeItem('loggedIn');
-            window.location.href = 'login.html';
+            // Set current user if logged in
+            if (sessionStorage.getItem('loggedIn') === 'true') {
+                currentUserEl.textContent = sessionStorage.getItem('username');
+            }
+
+            // Logout handler
+            logoutBtn.addEventListener('click', function () {
+                sessionStorage.removeItem('loggedIn');
+                window.location.href = 'login.html';
+            });
+
+            // Toggle dropdown menu
+            function toggleDropdown() {
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            }
+
+            // Click handler for dropdown and menu icon
+            function clickHandler(event) {
+                if (event.target === menuIcon) {
+                    toggleDropdown();
+                } else if (!event.target.closest('.dropdown')) {
+                    dropdown.style.display = 'none';
+                }
+            }
+
+            // Add click event listener to the window
+            window.addEventListener('click', clickHandler);
         });
-
     </script>
 </body>
 
