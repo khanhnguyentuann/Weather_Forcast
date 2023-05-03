@@ -66,12 +66,12 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.href = 'login.html';
     }
 
-    function toggleDropdown() {
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    }
-
     function closeShareModal() {
         shareModal.style.display = 'none';
+    }
+
+    function toggleDropdown() {
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
 
     function showFavoritesSetupModal() {
@@ -90,6 +90,37 @@ document.addEventListener('DOMContentLoaded', function () {
         sessionStorage.setItem('favoriteRegion', region);
 
         favoritesModal.style.display = 'none';
+        updateFavorites();
+    }
+
+    function updateFavorites() {
+        const favoriteWeatherType = sessionStorage.getItem('favoriteWeatherType');
+        const favoriteRegion = sessionStorage.getItem('favoriteRegion');
+        const weatherTypeMapping = {
+            'nang': 'Nắng',
+            'mua': 'Mưa',
+            'may': 'Mây',
+            'tuyet': 'Tuyết',
+            'gio': 'Gió'
+        };
+
+        const regionMapping = {
+            'asia': 'Châu Á',
+            'europe': 'Châu Âu',
+            'north-america': 'Bắc Mỹ',
+            'south-america': 'Nam Mỹ',
+            'africa': 'Châu Phi',
+            'oceania': 'Châu Đại Dương'
+        };
+
+        if (favoriteWeatherType && favoriteRegion) {
+            const weatherTypeText = weatherTypeMapping[favoriteWeatherType];
+            const regionText = regionMapping[favoriteRegion];
+
+            $('#show-favorites').html(`Xem ưa thích: ${weatherTypeText}, ${regionText}`);
+        } else {
+            $('#show-favorites').html('Xem ưa thích');
+        }
     }
 
     if (sessionStorage.getItem('loggedIn') === 'true') {
@@ -111,4 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
     setupFavorites.addEventListener('click', showFavoritesSetupModal);
     favoritesModalClose.addEventListener('click', closeFavoritesSetupModal);
     saveFavorites.addEventListener('click', saveFavoriteSettings);
+
+    updateFavorites();
 });
