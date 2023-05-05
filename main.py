@@ -57,7 +57,7 @@ def register():
     return 'success'
 
 # Lưu ưa thích của người dùng
-@app.route('/save-favorite', methods=['POST'])
+@app.route('/save-favorites', methods=['POST'])
 def save_favorite():
     user_id = get_user_id_from_session() # Lấy user_id từ session
     if user_id:
