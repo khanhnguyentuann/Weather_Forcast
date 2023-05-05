@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const setupFavorites = document.getElementById('setup-favorites');
     const favoritesModal = document.getElementById('favorites-modal');
     const favoritesModalClose = document.getElementById('favorites-modal-close');
-    const saveFavorites = document.getElementById('save-favorites');
     const shareModal = document.getElementById('share-modal');
     const shareModalClose = shareModal.querySelector('.close');
 
@@ -82,16 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
         favoritesModal.style.display = 'none';
     }
 
-    function saveFavoriteSettings() {
-        const weatherType = document.getElementById('weather-type').value;
-        const region = document.getElementById('region').value;
-
-        sessionStorage.setItem('favoriteWeatherType', weatherType);
-        sessionStorage.setItem('favoriteRegion', region);
-
-        favoritesModal.style.display = 'none';
-    }
-
     if (sessionStorage.getItem('loggedIn') === 'true') {
         currentUserEl.textContent = sessionStorage.getItem('username');
     }
@@ -110,7 +99,4 @@ document.addEventListener('DOMContentLoaded', function () {
     shareModalClose.addEventListener('click', closeShareModal);
     setupFavorites.addEventListener('click', showFavoritesSetupModal);
     favoritesModalClose.addEventListener('click', closeFavoritesSetupModal);
-    saveFavorites.addEventListener('click', saveFavoriteSettings);
-
-    updateFavorites();
 });
