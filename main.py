@@ -1,8 +1,9 @@
-from flask import Flask, request
+from flask import Flask, request, session
 import mysql.connector
 from flask_cors import CORS
 
 app = Flask(__name__)
+app.secret_key = 'sdfh%^&k;lwe42' # tự tạo
 CORS(app)
 
 # Kết nối đến cơ sở dữ liệu
@@ -16,18 +17,17 @@ db_connection = mysql.connector.connect(
 # Xử lý yêu cầu đăng nhập
 @app.route('/check-login', methods=['POST'])
 def check_login():
-    # Lấy thông tin đăng nhập từ yêu cầu POST
     username = request.form['username']
     password = request.form['password']
 
-    # Kiểm tra thông tin đăng nhập với cơ sở dữ liệu
     cursor = db_connection.cursor()
     query = "SELECT * FROM users WHERE username = %s AND password = %s"
     cursor.execute(query, (username, password))
     result = cursor.fetchone()
 
-    # Nếu thông tin đăng nhập đúng, trả về 'success'
     if result:
+        session['loggedIn'] = True
+        session['username'] = username
         return 'success'
     else:
         return 'failure'
@@ -35,12 +35,10 @@ def check_login():
 # Xử lý yêu cầu đăng ký
 @app.route('/register', methods=['POST'])
 def register():
-    # Lấy thông tin đăng ký từ yêu cầu POST
     username = request.form['username']
     email = request.form['email']
     password = request.form['password']
 
-    # Kiểm tra xem tên người dùng đã tồn tại chưa
     cursor = db_connection.cursor()
     query = "SELECT * FROM users WHERE username = %s"
     cursor.execute(query, (username,))
@@ -49,14 +47,43 @@ def register():
     if result:
         return 'failure'
 
-    # Thêm người dùng mới vào cơ sở dữ liệu
     query = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
     cursor.execute(query, (username, email, password))
     db_connection.commit()
 
-    # Trả về 'success' nếu đăng ký thành công
+    session['loggedIn'] = True
+    session['username'] = username
+
     return 'success'
 
+# Lưu ưa thích của người dùng
+@app.route('/save-favorite', methods=['POST'])
+def save_favorite():
+    user_id = get_user_id_from_session() # Lấy user_id từ session
+    if user_id:
+        weather_type = request.form['weather_type']
+        region = request.form['region']
+
+        cursor = db_connection.cursor()
+        query = "INSERT INTO favorites (user_id, weather_type, region) VALUES (%s, %s, %s)"
+        cursor.execute(query, (user_id, weather_type, region))
+        db_connection.commit()
+
+        return 'success'
+    else:
+        return 'failure'
+
+# Lấy user_id từ session
+def get_user_id_from_session():
+    session_key = 'loggedIn'
+    if session.get(session_key):
+        cursor = db_connection.cursor()
+        query = "SELECT id FROM users WHERE username = %s"
+        cursor.execute(query, (session['username'],))
+        result = cursor.fetchone()
+        if result:
+            return result[0]
+    return None
 
 if __name__ == '__main__':
     app.run(debug=True)
