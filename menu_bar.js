@@ -50,7 +50,6 @@ $(document).ready(function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    const currentUserEl = document.getElementById('current-user');
     const logoutBtn = document.getElementById('logout-btn');
     const menuIcon = document.querySelector('.menu-icon');
     const dropdown = document.getElementById('myDropdown');
@@ -79,10 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function closeFavoritesSetupModal() {
         favoritesModal.style.display = 'none';
-    }
-
-    if (sessionStorage.getItem('loggedIn') === 'true') {
-        currentUserEl.textContent = sessionStorage.getItem('username');
     }
 
     logoutBtn.addEventListener('click', logout);
