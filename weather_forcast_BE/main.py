@@ -1,15 +1,11 @@
-from flask import Flask, request, session
+from flask import Flask, request
 import mysql.connector
 from flask_cors import CORS, cross_origin
-from flask_session import Session
 
 app = Flask(__name__)
 app.secret_key = 'sdfh%^&k;lwe42'
 
 CORS(app, origins=["http://127.0.0.1:5500"], supports_credentials=True)
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['SESSION_FILE_DIR'] = './.flask_session/'
-Session(app)
 
 db_connection = mysql.connector.connect(
     host="localhost",
@@ -25,10 +21,6 @@ def check_login():
     username = request.form.get('username')
     password = request.form.get('password')
 
-    # Kiểm tra xem có thiếu tên đăng nhập hoặc mật khẩu không
-    if not username or not password:
-        return 'failure'
-
     # Lấy con trỏ đến CSDL để thực hiện truy vấn
     cursor = db_connection.cursor()
 
@@ -43,12 +35,8 @@ def check_login():
 
     # Kiểm tra xem kết quả truy vấn có tồn tại hay không
     if result:
-        # Nếu tồn tại thì lưu thông tin đăng nhập vào phiên làm việc
-        session['loggedIn'] = True
-        session['username'] = username
         return 'success'
     else:
-        # Nếu không tồn tại thì trả về kết quả thất bại
         return 'failure'
 
 @app.route('/register', methods=['POST'])
@@ -57,9 +45,6 @@ def register():
     username = request.form.get('username')
     email = request.form.get('email')
     password = request.form.get('password')
-
-    if not username or not email or not password:
-        return 'failure'
 
     cursor = db_connection.cursor()
     query = "SELECT * FROM users WHERE username = %s"
@@ -73,18 +58,13 @@ def register():
     cursor.execute(query, (username, email, password))
     db_connection.commit()
 
-    session['loggedIn'] = True
-    session['username'] = username
     return 'success'
 
 @app.route('/save-favorites', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def save_favorite():
-    
-    # username = session.get('username') # Lấy tên đăng nhập từ session
-    username = request.form.get('username')
 
-    print(f"username: {username}") # In ra tên đăng nhập kiểm tra
+    username = request.form.get('username')
 
     # Nếu không tìm thấy tên đăng nhập thì trả về failure
     if not username:

@@ -3,7 +3,7 @@
 
 <head>
     <title>Weather Forecast</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
         integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="">
@@ -30,7 +30,10 @@
 </head>
 
 <body>
-    <script>if (sessionStorage.getItem('loggedIn') !== 'true') window.location.href = 'login.html';</script>
+    <script>
+        if (sessionStorage.getItem('loggedIn') !== 'true')
+            window.location.href = 'login.html';
+    </script>
     <button class="menu-icon" onclick="toggleDropdown()">☰</button>
     <div id="myDropdown" class="dropdown">
         <a href="#">Xem ưa thích</a>
@@ -91,8 +94,8 @@
         </div>
     </div>
     <div id="map"></div>
-    <script src="main_map.js"></script>
-    <script src="menu_bar.js"></script>
+    <script src="js/main_map.js"></script>
+    <script src="js/menu_bar.js"></script>
     <script>
         $(document).ready(function () {
             $('#save-favorites').click(function () {

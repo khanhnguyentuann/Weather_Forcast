@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <title>Đăng nhập</title>
-    <link rel="stylesheet" href="login_register.css">
+    <title>Đăng ký</title>
+    <link rel="stylesheet" href="css/login_register.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -23,53 +23,52 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .close-login {
+        .back-button {
             position: absolute;
             top: 10px;
-            right: 15px;
+            left: 15px;
             font-size: 25px;
             cursor: pointer;
+            z-index: 5;
+            background-color: #333;
+            color: #fff;
+            width: 50px;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
+    <div class="back-button">
+        <i class="fas fa-arrow-left"></i>
+    </div>
     <div id="map"></div>
-    <div class="login-btn">Đăng nhập</div>
     <div class="site-title">
         <i class="fa fa-sun-o"></i> Weather Forcast
     </div>
     <div class="login-container">
-        <div class="close-login">&times;</div>
-        <h2>Đăng nhập</h2>
-        <form id="login-form">
+        <h2>Đăng ký</h2>
+        <form id="register-form">
             <label for="username">Tên đăng nhập:</label>
             <input type="text" id="username" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
             <label for="password">Mật khẩu:</label>
             <input type="password" id="password" required>
-            <button type="submit">Đăng nhập</button>
+            <label for="confirm-password">Xác nhận mật khẩu:</label>
+            <input type="password" id="confirm-password" required>
+            <button type="submit">Đăng ký</button>
         </form>
-        <button class="facebook-login"><i class="fab fa-facebook"></i> Đăng nhập bằng Facebook</button>
-        <div id="fb-root"></div>
-        <script async defer crossorigin="anonymous"
-            src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0&appId=944575006963713&autoLogAppEvents=1"
-            nonce="YOUR_NONCE"></script>
-
         <div class="additional-links">
-            <a href="#" id="register-link">Chưa có tài khoản? Đăng ký</a>
+            <a href="#" id="login-link">Đã có tài khoản? Đăng nhập</a>
         </div>
     </div>
     <script>
-        $(document).ready(function () {
-            $('.login-btn').click(function () {
-                $('.login-container').show();
-            });
-            $('.close-login').click(function () {
-                $('.login-container').hide();
-            });
+        $('.back-button').click(function () {
+            window.location.href = 'login.html';
         });
     </script>
-    <script src="login_register.js"></script>
+    <script src="js/login_register.js"></script>
 </body>
 
 </html>
