@@ -1,0 +1,97 @@
+.favorites-table-container {
+    height: 80%;
+    overflow-y: scroll;
+}
+
+.favorites-table {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+}
+
+.favorites-table td {
+    width: 20%;
+    border: 1px solid #ccc;
+    height: 25px; /* Kích thước cố định cho mỗi dòng */
+    overflow: auto;
+}
+
+.favorites-table th {
+    height: 30px; 
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #dddddd;
+    margin: 7% auto;
+    padding: 20px;
+    border: 1px solid #0b0808;
+    max-width: 600px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 500px;
+}
+
+.close {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#save-favorites {
+    background-color: #af4c4c91;
+    color: white;
+    padding: 20px 30px;
+}
+
+#save-favorites:hover {
+    background-color: #45a049;
+}
+
+select {
+    width: 70%;
+    padding: 20px 29px;
+    margin: 8px 0;
+}
+
+.edit-icon,
+.delete-icon {
+    cursor: pointer;
+}
+
+.edit-icon {
+    color: #ffc107;
+}
+
+.delete-icon {
+    color: #dc3545;
+}
+
+.add-favorite {
+    text-align: right;
+}
+
+.add-favorite i {
+    font-size: 24px;
+    cursor: pointer;
+    color: #4CAF50;
+}

@@ -53,9 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const logoutBtn = document.getElementById('logout-btn');
     const menuIcon = document.querySelector('.menu-icon');
     const dropdown = document.getElementById('myDropdown');
-    const setupFavorites = document.getElementById('setup-favorites');
-    const favoritesModal = document.getElementById('favorites-modal');
-    const favoritesModalClose = document.getElementById('favorites-modal-close');
     const shareModal = document.getElementById('share-modal');
     const shareModalClose = shareModal.querySelector('.close');
 
@@ -72,14 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
         dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
     }
 
-    function showFavoritesSetupModal() {
-        favoritesModal.style.display = 'block';
-    }
-
-    function closeFavoritesSetupModal() {
-        favoritesModal.style.display = 'none';
-    }
-
     logoutBtn.addEventListener('click', logout);
 
     function clickHandler(event) {
@@ -92,6 +81,4 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('click', clickHandler);
 
     shareModalClose.addEventListener('click', closeShareModal);
-    setupFavorites.addEventListener('click', showFavoritesSetupModal);
-    favoritesModalClose.addEventListener('click', closeFavoritesSetupModal);
 });
