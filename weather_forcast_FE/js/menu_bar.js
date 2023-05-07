@@ -1,10 +1,3 @@
-if (sessionStorage.getItem('loggedIn') !== 'true')
-    window.location.href = 'login.html';
-
-if (sessionStorage.getItem('loggedIn') === 'true') {
-    document.getElementById('current-user').textContent = sessionStorage.getItem('username');
-}
-
 $(document).ready(function () {
     const apiKey = "c9c8e558cd1dad0583f2600da8c72b7e";
 
@@ -14,37 +7,6 @@ $(document).ready(function () {
             dataType: "json",
         });
     }
-
-    $('#save-favorites').click(function () {
-        var weatherType = $('#weather-type').val();
-        var region = $('#region').val();
-        var username = sessionStorage.getItem('username');
-
-        $.ajax({
-            url: "http://localhost:5000/save-favorites",
-            type: 'POST',
-            data: {
-                weather_type: weatherType,
-                region: region,
-                username: username
-            },
-            xhrFields: {
-                withCredentials: true // bật chế độ gửi Cookie
-            },
-            success: function (response) {
-                console.log(response);
-                if (response === 'success') {
-                    alert('Lưu thành công!');
-                } else {
-                    alert('Lưu thất bại!');
-                }
-            },
-            error: function (error) {
-                console.log(error);
-                alert('Lỗi khi lưu ưa thích!');
-            }
-        });
-    });
 
     function navigateToLocation(item) {
         const coordinates = [item.lat, item.lon];
