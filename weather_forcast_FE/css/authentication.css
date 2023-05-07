@@ -9,19 +9,16 @@ html {
   width: 100%;
   position: absolute;
   z-index: 0;
-  /* Đặt z-index cho bản đồ */
 }
 
 .leaflet-control-zoom a:last-child {
   border-bottom: none;
 }
 
-/* Đặt nút phóng to/thu nhỏ bên phải */
 .leaflet-right .leaflet-control {
   margin-right: 10px;
 }
 
-/* Định dạng nút đăng nhập và biểu tượng */
 .login-btn {
     position: fixed;
     top: 10px;
@@ -119,7 +116,6 @@ html {
     align-items: center;
 }
 
-/* Định dạng tên web và biểu tượng */
 .site-title {
     position: fixed;
     top: 10px;

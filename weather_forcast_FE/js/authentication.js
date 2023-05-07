@@ -16,6 +16,17 @@ $(document).ready(function () {
         });
     }
 
+    $('.login-btn').click(function () {
+        $('.login-container').show();
+    });
+    $('.close-login').click(function () {
+        $('.login-container').hide();
+    });
+
+    $('.back-button').click(function () {
+        window.location.href = 'login.html';
+    });
+
     $('#login-form').submit(function (event) {
         var username = $('#username').val();
         var password = $('#password').val();
