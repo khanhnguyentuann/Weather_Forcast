@@ -17,14 +17,6 @@
         .leaflet-control-zoom a {
             background-color: #333;
             color: #fff;
-            font-weight: bold;
-            font-size: 18px;
-            line-height: 26px;
-            width: 300px;
-            height: 30px;
-            display: block;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
@@ -45,7 +37,10 @@
     <div id="view-favorites-modal" class="modal">
         <div class="modal-content">
             <span class="close" id="view-favorites-modal-close">&times;</span>
-            <h2>Danh sách ưa thích</h2>
+            <h2>
+                Danh sách ưa thích
+                <i class="fa fa-plus add-favorite-icon"></i>
+            </h2>
             <div id="favorites-table-container" class="favorites-table-container"></div>
         </div>
     </div>

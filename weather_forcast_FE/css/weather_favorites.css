@@ -1,32 +1,25 @@
 .favorites-table-container {
-    width: 100%;
     height: 80%;
-    overflow: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow-y: scroll;
 }
 
 .favorites-table {
     width: 80%;
     margin: 0 auto;
     text-align: center;
-    border-collapse: collapse;
-    font-size: 14px;
     background-color: #333;
     color: #fff;
 }
 
-.favorites-table th,
 .favorites-table td {
-    width: 50%;
-    padding: 10px;
+    width: 20%;
     border: 1px solid #ccc;
+    height: 25px; /* Kích thước cố định cho mỗi dòng */
+    overflow: auto;
 }
 
 .favorites-table th {
-    background-color: #333;
-    font-weight: bold;
+    height: 30px; 
 }
 
 .modal {
@@ -42,20 +35,16 @@
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: #dddddd;
     margin: 7% auto;
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+    border: 1px solid #0b0808;
     max-width: 600px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    position: relative;
     height: 500px;
-    overflow: auto;
 }
 
 .close {
-    color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -69,13 +58,9 @@
 }
 
 #save-favorites {
-    background-color: #4CAF50;
+    background-color: #af4c4c91;
     color: white;
-    padding: 12px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 20px;
+    padding: 20px 30px;
 }
 
 #save-favorites:hover {
@@ -83,10 +68,30 @@
 }
 
 select {
-    width: 100%;
-    padding: 12px 20px;
+    width: 70%;
+    padding: 20px 29px;
     margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+}
+
+.edit-icon,
+.delete-icon {
+    cursor: pointer;
+}
+
+.edit-icon {
+    color: #ffc107;
+}
+
+.delete-icon {
+    color: #dc3545;
+}
+
+.add-favorite {
+    text-align: right;
+}
+
+.add-favorite i {
+    font-size: 24px;
+    cursor: pointer;
+    color: #4CAF50;
 }

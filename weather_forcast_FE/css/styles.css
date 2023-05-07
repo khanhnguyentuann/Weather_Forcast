@@ -11,10 +11,6 @@ html {
   z-index: 0;
 }
 
-.leaflet-control-zoom a:last-child {
-  border-bottom: none;
-}
-
 .leaflet-right .leaflet-control {
   margin-right: 10px;
 }
@@ -22,16 +18,13 @@ html {
 
 /* Thêm CSS cho nút menu */
 .menu-icon {
-  display: block;
   position: fixed;
   top: 10px;
   left: 10px;
   z-index: 9999;
   background-color: transparent;
   border: none;
-  color: #333;
   font-size: 24px;
-  cursor: pointer;
 }
 
 /* Thêm CSS cho menu dropdown */
@@ -39,13 +32,11 @@ html {
   position: fixed;
   top: 50px;
   left: 10px;
-  z-index: 9998;
   display: none;
+  z-index: 10;
   background-color: #333;
   padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
-  border-radius: 5px;
-  overflow: hidden;
 }
 
 .dropdown a {
@@ -65,16 +56,14 @@ html {
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 18px;
   color: white;
-  pointer-events: none;
 }
 
 #search-container {
   position: absolute;
   top: 10px;
   left: 50px;
-  z-index: 1000;
+  z-index: 10;
 }
 
 #location-search {
@@ -164,14 +153,10 @@ html {
   font-size: 14px;
   font-weight: bold;
   color: #fff;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 10;
   padding: 8px 12px;
   background-color: #333;
   border-radius: 10px;
-  cursor: pointer;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 }
 
@@ -192,9 +177,7 @@ html {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: #333;
-  border-radius: 5px;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .layer-item {
@@ -250,100 +233,39 @@ html {
   top: 10px;
   right: 150px;
   font-size: 25px;
-  color: #333;
-  background-color: #fff;
+  background-color: #ace3a8;
   z-index: 5;
-  font-weight: bold;
 }
 
 .forecast-container {
   display: flex;
   justify-content: space-between;
-  background-color: rgba(255, 255, 255, 0.8);
   padding: 10px;
-  border-radius: 5px;
   position: absolute;
   bottom: 0px;
-  left: 0;
-  right: 0;
   width: calc(100% - 40px);
   margin-left: 10px;
-  margin-right: 10px;
   z-index: 1000;
 }
 
 .forecast-item {
   text-align: center;
   margin-top: 10px;
-  margin-bottom: 1px;
-  border-radius: 5px;
   background-color: #333;
   color: #fff;
   flex: 1;
   max-width: calc(20% - 20px);
   margin-left: 5px;
   margin-right: 5px;
-  box-sizing: border-box;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .forecast-item p {
   line-height: 0.9;
 }
 
-.close-button {
-  position: absolute;
-  top: 2px;
-  right: 10px;
-  color: #333;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.site-title i {
-  margin-right: 8px;
-}
-
-.logout-btn {
-  position: fixed;
-  top: 10px;
-  right: 50px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 12px;
-  background-color: #333;
-  border-radius: 10px;
-  cursor: pointer;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-}
-
 .logout-btn:hover {
   background-color: #fff;
   color: #333;
-}
-
-.logout-btn .fa {
-  padding-left: 7px;
-}
-
-.layer-panel {
-  position: fixed;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background-color: #333;
-  border-radius: 5px;
-  z-index: 1000;
 }
 
 .layer-item {
@@ -394,52 +316,6 @@ html {
   margin-top: 10px;
 }
 
-.welcome-container {
-  position: absolute;
-  top: 10px;
-  right: 150px;
-  font-size: 25px;
-  color: #333;
-  background-color: #fff;
-  z-index: 5;
-  font-weight: bold;
-}
-
-.forecast-container {
-  display: flex;
-  justify-content: space-between;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 10px;
-  border-radius: 5px;
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  right: 0;
-  width: calc(100% - 40px);
-  margin-left: 10px;
-  margin-right: 10px;
-  z-index: 1000;
-}
-
-.forecast-item {
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 1px;
-  border-radius: 5px;
-  background-color: #333;
-  color: #fff;
-  flex: 1;
-  max-width: calc(20% - 20px);
-  margin-left: 5px;
-  margin-right: 5px;
-  box-sizing: border-box;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-
-.forecast-item p {
-  line-height: 0.9;
-}
-
 .close-button {
   position: absolute;
   top: 2px;
@@ -447,6 +323,4 @@ html {
   background-color: transparent;
   border: none;
   font-size: 20px;
-  color: #333;
-  cursor: pointer;
 }

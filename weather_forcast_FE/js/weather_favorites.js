@@ -10,6 +10,10 @@ function showFavorites(favorites) {
     favoritesTable.className = 'favorites-table';
 
     var headerRow = document.createElement('tr');
+    var indexHeader = document.createElement('th');
+    indexHeader.textContent = 'STT';
+    headerRow.appendChild(indexHeader);
+
     var weatherTypeHeader = document.createElement('th');
     weatherTypeHeader.textContent = 'Loại thời tiết';
     headerRow.appendChild(weatherTypeHeader);
@@ -17,15 +21,59 @@ function showFavorites(favorites) {
     regionHeader.textContent = 'Vùng';
     headerRow.appendChild(regionHeader);
     favoritesTable.appendChild(headerRow);
+    var editHeader = document.createElement('th');
+    editHeader.textContent = 'Chỉnh sửa';
+    headerRow.appendChild(editHeader);
+    var deleteHeader = document.createElement('th');
+    deleteHeader.textContent = 'Xoá';
+    headerRow.appendChild(deleteHeader);
+    var markMapHeader = document.createElement('th');
+    markMapHeader.textContent = 'Đánh dấu map';
+    headerRow.appendChild(markMapHeader);
+    favoritesTable.appendChild(headerRow);
 
-    favorites.forEach(function (fav) {
+    favorites.forEach(function (fav, index) {
         var dataRow = document.createElement('tr');
+
+        var indexCell = document.createElement('td');
+        indexCell.textContent = index + 1;
+        dataRow.appendChild(indexCell);
+
         var weatherTypeCell = document.createElement('td');
         weatherTypeCell.textContent = fav.weather_type;
         dataRow.appendChild(weatherTypeCell);
+
         var regionCell = document.createElement('td');
         regionCell.textContent = fav.region;
         dataRow.appendChild(regionCell);
+
+        var editCell = document.createElement('td');
+        var editIcon = document.createElement('i');
+        editIcon.className = 'fa fa-pencil edit-icon';
+        editIcon.addEventListener('click', function () {
+            alert('Chức năng này đang phát triển!');
+        });
+        editCell.appendChild(editIcon);
+        dataRow.appendChild(editCell);
+
+        var deleteCell = document.createElement('td');
+        var deleteIcon = document.createElement('i');
+        deleteIcon.className = 'fa fa-trash delete-icon';
+        deleteIcon.addEventListener('click', function () {
+            alert('Chức năng này đang phát triển!');
+        });
+        deleteCell.appendChild(deleteIcon);
+        dataRow.appendChild(deleteCell);
+
+        var markMapCell = document.createElement('td');
+        var markMapIcon = document.createElement('i');
+        markMapIcon.className = 'fa fa-map-marker mark-map-icon';
+        markMapIcon.addEventListener('click', function () {
+            alert('Chức năng này đang phát triển!');
+        });
+        markMapCell.appendChild(markMapIcon);
+        dataRow.appendChild(markMapCell);
+
         favoritesTable.appendChild(dataRow);
     });
 
