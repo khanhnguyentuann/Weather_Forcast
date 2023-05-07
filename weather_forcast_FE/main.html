@@ -26,17 +26,73 @@
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        .favorites-table-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 13;
+        }
+
+        .favorites-table {
+            width: 80%;
+            /* tăng độ rộng của bảng */
+            margin: 0 auto;
+            text-align: center;
+            border-collapse: collapse;
+            font-size: 14px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .favorites-table th,
+        .favorites-table td {
+            width: 50%;
+            /* tăng độ rộng của các cột */
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .favorites-table th {
+            background-color: #333;
+            font-weight: bold;
+        }
+
+        .close-favorites-btn {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            line-height: 30px;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
+    <script>
+        if (sessionStorage.getItem('loggedIn') !== 'true')
+            window.location.href = 'login.html';
+    </script>
     <button class="menu-icon" onclick="toggleDropdown()">☰</button>
     <div id="myDropdown" class="dropdown">
-        <a href="#">Xem ưa thích</a>
+        <a href="#" id="view-favorites">Xem ưa thích</a>
         <a href="#" id="setup-favorites">Thiết lập ưa thích</a>
         <a href="#">Xem cảnh báo</a>
         <a href="#">Thiết lập cảnh báo</a>
     </div>
+    <div id="favorites-table-container" class="favorites-table-container" style="display:none">
+        <button class="close-favorites-btn" onclick="closeFavoritesTable()">&times;</button>
+    </div>
+
     <div id="favorites-modal" class="modal">
         <div class="modal-content">
             <span class="close" id="favorites-modal-close">&times;</span>
@@ -92,6 +148,106 @@
     <div id="map"></div>
     <script src="js/main_map.js"></script>
     <script src="js/menu_bar.js"></script>
+    <script>
+        if (sessionStorage.getItem('loggedIn') === 'true') {
+            document.getElementById('current-user').textContent = sessionStorage.getItem('username');
+        }
+
+        function closeFavoritesTable() {
+            $('#favorites-table-container').hide();
+        }
+
+        function showFavorites(favorites) {
+            var favoritesTable = document.createElement('table');
+            favoritesTable.className = 'favorites-table';
+
+            // Tạo hàng tiêu đề cho bảng
+            var headerRow = document.createElement('tr');
+            var weatherTypeHeader = document.createElement('th');
+            weatherTypeHeader.textContent = 'Loại thời tiết';
+            headerRow.appendChild(weatherTypeHeader);
+            var regionHeader = document.createElement('th');
+            regionHeader.textContent = 'Vùng';
+            headerRow.appendChild(regionHeader);
+            favoritesTable.appendChild(headerRow);
+
+            // Thêm hàng dữ liệu vào bảng
+            favorites.forEach(function (fav) {
+                var dataRow = document.createElement('tr');
+                var weatherTypeCell = document.createElement('td');
+                weatherTypeCell.textContent = fav.weather_type;
+                dataRow.appendChild(weatherTypeCell);
+                var regionCell = document.createElement('td');
+                regionCell.textContent = fav.region;
+                dataRow.appendChild(regionCell);
+                favoritesTable.appendChild(dataRow);
+            });
+
+            // Thêm bảng vào div và hiển thị div đó
+            $('#favorites-table-container').empty().append(favoritesTable).show();
+        }
+
+        $(document).ready(function () {
+            $('#save-favorites').click(function () {
+                var weatherType = $('#weather-type').val();
+                var region = $('#region').val();
+                var username = sessionStorage.getItem('username');
+
+                $.ajax({
+                    url: "http://localhost:5000/save-favorites",
+                    type: 'POST',
+                    data: {
+                        weather_type: weatherType,
+                        region: region,
+                        username: username
+                    },
+                    xhrFields: {
+                        withCredentials: true // bật chế độ gửi Cookie
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        if (response === 'success') {
+                            alert('Lưu thành công!');
+                        } else {
+                            alert('Lưu thất bại!');
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert('Lỗi khi lưu ưa thích!');
+                    }
+                });
+            });
+        });
+
+        $('#view-favorites').click(function () {
+            var username = sessionStorage.getItem('username');
+
+            $.ajax({
+                url: "http://localhost:5000/get-favorites",
+                type: 'POST',
+                data: {
+                    username: username
+                },
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (response) {
+                    if (response !== 'failure') {
+                        var favorites = JSON.parse(response);
+                        showFavorites(favorites);
+                    } else {
+                        alert('Không thể tải danh sách ưa thích!');
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('Lỗi khi tải danh sách ưa thích!');
+                }
+            });
+        });
+
+    </script>
 </body>
 
 </html>
