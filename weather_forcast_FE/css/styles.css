@@ -257,6 +257,14 @@ html {
   max-width: calc(20% - 20px);
   margin-left: 5px;
   margin-right: 5px;
+  border-radius: 12px;
+  border: 2px solid green;
+  transition: transform 0.3s ease, background-color 0.1s, box-shadow 0.1s;
+}
+
+.forecast-item:hover {
+  transform: scale(1.05); /* Phóng to đối tượng khi di chuột qua */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Thêm đổ bóng cho đối tượng khi di chuột qua */
 }
 
 .forecast-item p {

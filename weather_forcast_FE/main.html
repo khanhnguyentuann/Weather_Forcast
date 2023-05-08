@@ -13,6 +13,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         .leaflet-control-zoom a {
             background-color: #333;
@@ -30,8 +31,8 @@
     <div id="myDropdown" class="dropdown">
         <a href="#" id="view-favorites">Xem ưa thích</a>
         <a href="#" id="setup-favorites">Thiết lập ưa thích</a>
-        <a href="#">Xem cảnh báo</a>
-        <a href="#">Thiết lập cảnh báo</a>
+        <a href="#" id="view-alerts">Xem cảnh báo</a>
+        <a href="#" id="setup-alerts">Thiết lập cảnh báo</a>
     </div>
 
     <div id="view-favorites-modal" class="modal">
@@ -69,6 +70,38 @@
             <button id="save-favorites">Lưu ưa thích</button>
         </div>
     </div>
+
+    <div id="setup-alerts-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="setup-alerts-modal-close">&times;</span>
+            <h2>Thiết lập cảnh báo thời tiết</h2>
+            <p>Chọn đất nước:</p>
+            <select id="country">
+                <option value="VietNam">Việt Nam</option>
+                <option value="Trung Quoc">Trung Quốc</option>
+                <option value="Campuchia">Campuchia</option>
+                <option value="Lao">Lào</option>
+            </select>
+            <p>Chọn loại cảnh báo:</p>
+            <div>
+                <input type="checkbox" id="alert-storm" name="alert-type">
+                <label for="alert-storm">Bão, giông</label>
+                <input type="number" id="alert-storm-value" placeholder="Nhập giá trị">
+            </div>
+            <div>
+                <input type="checkbox" id="alert-temp" name="alert-type">
+                <label for="alert-temp">Nhiệt độ cao/thấp</label>
+                <input type="number" id="alert-temp-value" placeholder="Nhập giá trị">
+            </div>
+            <!-- Thêm các loại cảnh báo khác tương tự ở đây -->
+            <p>Nhập nội dung cảnh báo:</p>
+            <textarea id="alert-content" rows="4" cols="50"></textarea>
+            <p>Nhập địa chỉ email để nhận cảnh báo:</p>
+            <input type="email" id="email-address" placeholder="Nhập địa chỉ email">
+            <button id="save-alerts">Lưu cài đặt cảnh báo</button>
+        </div>
+    </div>
+
     <div id="search-container">
         <i class="fa fa-search search-icon"></i>
         <input type="text" id="location-search" placeholder="Search location">
@@ -80,7 +113,7 @@
     <div class="welcome-container">Xin chào, <span id="current-user">Người dùng</span>!</div>
     <div class="logout-btn" id="logout-btn">Log Out <i class="fa fa-sign-out"></i></div>
     <div class="layer-panel">
-        <div class="layer-item" id="wind"><i class="fa fa-flag"></i>Wind</div>
+        <div class="layer-item" id="wind"><i class="fas fa-wind"></i>Wind</div>
         <div class="layer-item" id="rain"><i class="fa fa-tint"></i>Rain</div>
         <div class="layer-item" id="temp"><i class="fa fa-thermometer-half"></i>Temp</div>
         <div class="layer-item" id="clouds"><i class="fa fa-cloud"></i>Clouds</div>
@@ -105,6 +138,19 @@
         if (sessionStorage.getItem('loggedIn') === 'true') {
             document.getElementById('current-user').textContent = sessionStorage.getItem('username');
         }
+        document.getElementById('setup-alerts').addEventListener('click', function () {
+            document.getElementById('setup-alerts-modal').style.display = 'block';
+        });
+
+        document.getElementById('setup-alerts-modal-close').addEventListener('click', function () {
+            document.getElementById('setup-alerts-modal').style.display = 'none';
+        });
+        document.getElementById('view-alerts').addEventListener('click', function () {
+            alert('Chức năng đang phát triển. Vui lòng thử lại sau.');
+        });
+        document.getElementById('save-alerts').addEventListener('click', function () {
+            alert('Chức năng đang phát triển. Vui lòng thử lại sau.');
+        });
     </script>
 </body>
 
