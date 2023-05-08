@@ -74,7 +74,6 @@ async function fetchWeatherData(lat, lon) {
     }
 }
 
-
 async function showWeatherPopup(lat, lon, title, marker) {
     const data = await fetchWeatherData(lat, lon);
     if (data) {
@@ -83,19 +82,22 @@ async function showWeatherPopup(lat, lon, title, marker) {
         const temperature = data.main && data.main.temp ? data.main.temp + " °C" : "N/A";
         const clouds = data.clouds && data.clouds.all ? data.clouds.all + " %" : "N/A";
         const air_pressure = data.main && data.main.pressure ? data.main.pressure + " hPa" : "N/A";
-        const humidity = data.main && data.main.humidity ? data.main.humidity + " %" : "N/A";
 
         const popupContent = `
             <div>
-                <h3>${title} ${data.name}</h3>
-                <p>Vĩ độ: ${lat}</p>
-                <p>Kinh độ: ${lon}</p>
-                <p>Tốc độ gió: ${wind_speed}</p>
-                <p>Lượng mưa 1h: ${rain_1h}</p>
-                <p>Nhiệt độ: ${temperature}</p>
-                <p>Mây che phủ: ${clouds}</p>
-                <p>Áp suất không khí: ${air_pressure}</p>
-                <p>Độ ẩm: ${humidity}</p>
+            <h3 style="text-align: center;
+            background-color: #333;
+            color: #fff;padding: 10px;
+            border-radius: 12px;
+            border: 2px solid blue;
+            font-family: cursive;">${title} ${data.name}</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Vĩ độ: ${lat}</p>
+                <p><i class="fas fa-map-marker-alt"></i> Kinh độ: ${lon}</p>
+                <p><i class="fas fa-wind"></i> Tốc độ gió: ${wind_speed}</p>
+                <p><i class="fas fa-tint"></i> Lượng mưa 1h: ${rain_1h}</p>
+                <p><i class="fas fa-thermometer-half"></i> Nhiệt độ: ${temperature}</p>
+                <p><i class="fas fa-cloud"></i> Mây che phủ: ${clouds}</p>
+                <p><i class="fas fa-tachometer-alt"></i> Áp suất không khí: ${air_pressure}</p>
             </div>
         `;
 
@@ -182,10 +184,14 @@ async function showWeatherForecast(lat, lon) {
             const forecast = data.list[i];
             const date = new Date(forecast.dt * 1000).toLocaleDateString();
             const temperature = forecast.main.temp ? forecast.main.temp + " °C" : "N/A";
-            const humidity = forecast.main.humidity ? forecast.main.humidity + " %" : "N/A";
+            const rain_3h = forecast.rain && forecast.rain['3h'] ? forecast.rain['3h'] + " mm" : "N/A";
             const wind_speed = forecast.wind.speed ? forecast.wind.speed + " m/s" : "N/A";
-            const weatherIcon = forecast.weather[0].icon ? `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png` : "";
+            const weatherIcon = forecast.weather[0].icon ? `https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png` : "";
             const weatherDescription = forecast.weather[0].description ? forecast.weather[0].description.charAt(0).toUpperCase() + forecast.weather[0].description.slice(1) : "";
+
+            const temperatureIcon = "<i class='fas fa-thermometer-half'></i>";
+            const rainIcon = "<i class='fas fa-tint'></i>";
+            const windIcon = "<i class='fas fa-wind'></i>";
 
             forecastHTML += `
                 <div class='forecast-item'>
@@ -194,9 +200,9 @@ async function showWeatherForecast(lat, lon) {
                         <img src="${weatherIcon}" alt="${weatherDescription}" width="50" height="50" />
                         <span>${weatherDescription}</span>
                     </span>
-                    <p>Nhiệt độ: ${temperature}</p>
-                    <p>Độ ẩm: ${humidity}</p>
-                    <p>Tốc độ gió: ${wind_speed}</p>
+                    <p style="text-align: left;padding-left: 20px;">${temperatureIcon}   Nhiệt độ: ${temperature}</p>
+                    <p style="text-align: left;padding-left: 20px;">${rainIcon}   Lượng mưa: ${rain_3h}</p>
+                    <p style="text-align: left;padding-left: 20px;">${windIcon}   Tốc độ gió: ${wind_speed}</p>
                 </div>
             `;
         }

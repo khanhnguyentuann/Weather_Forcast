@@ -14,12 +14,13 @@
 .favorites-table td {
     width: 20%;
     border: 1px solid #ccc;
-    height: 25px; /* Kích thước cố định cho mỗi dòng */
+    height: 25px;
+    /* Kích thước cố định cho mỗi dòng */
     overflow: auto;
 }
 
 .favorites-table th {
-    height: 30px; 
+    height: 30px;
 }
 
 .modal {
@@ -69,7 +70,6 @@
 
 select {
     width: 70%;
-    padding: 20px 29px;
     margin: 8px 0;
 }
 
@@ -94,4 +94,35 @@ select {
     font-size: 24px;
     cursor: pointer;
     color: #4CAF50;
+}
+
+.modal p {
+    margin-bottom: 10px;
+}
+
+.modal select,
+.modal input,
+.modal textarea {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal button {
+    font-size: 14px;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+.modal button:hover {
+    background-color: #0056b3;
 }
