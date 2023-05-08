@@ -332,3 +332,12 @@ html {
   border: none;
   font-size: 20px;
 }
+
+.remember-me {
+  display: flex;
+  align-items: center;
+}
+
+.remember-me input[type="checkbox"] {
+  margin-right: 5px;
+}

@@ -16,11 +16,14 @@ $(document).ready(function () {
         });
     }
 
-    $('.login-btn').click(function () {
-        $('.login-container').show();
+    // Add click event to the login button
+    $(".login-btn").click(function () {
+        $(".login-container").fadeIn(500);
     });
-    $('.close-login').click(function () {
-        $('.login-container').hide();
+
+    // Add click event to the close button
+    $(".close-login").click(function () {
+        $(".login-container").fadeOut(500);
     });
 
     $('.back-button').click(function () {
@@ -28,12 +31,19 @@ $(document).ready(function () {
     });
 
     $('#login-form').submit(function (event) {
-        var username = $('#username').val();
-        var password = $('#password').val();
-        handleFormSubmission(event, 'http://localhost:5000/check-login', { username: username, password: password }, function (response) {
+        event.preventDefault();
+        const username = $("#username").val();
+        const password = $("#password").val();
+        const rememberMe = $("#remember-me").is(":checked");
+
+        handleFormSubmission(event, 'http://localhost:5000/check-login', { username: username, password: password, rememberMe: rememberMe }, function (response) {
             if (response == 'success') {
                 sessionStorage.setItem('loggedIn', 'true');
                 sessionStorage.setItem('username', username);
+                if (rememberMe) {
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('password', password);
+                }
                 window.location.href = 'main.html';
             } else {
                 alert('Tên đăng nhập hoặc mật khẩu không đúng.');

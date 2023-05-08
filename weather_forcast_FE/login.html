@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 
 <head>
-    <title>Đăng nhập</title>
+    <title>Đăng nhập - Weather Forecast</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Đăng nhập vào Weather Forecast để theo dõi và cập nhật thông tin thời tiết nhanh chóng và chính xác.">
+    <meta property="og:title" content="Đăng nhập - Weather Forecast">
+    <meta property="og:description" content="Đăng nhập vào Weather Forecast để theo dõi và cập nhật thông tin thời tiết nhanh chóng và chính xác.">
+    <meta property="og:image" content="LINK_ẢNH_PREVIEW">
+    <meta property="og:url" content="LINK_TRANG_WEB">
     <link rel="stylesheet" href="css/authentication.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <style>
@@ -34,7 +42,7 @@
 </head>
 
 <body>
-    <div id="map"></div>
+    <div id="map"></div> 
     <div class="login-btn">Đăng nhập</div>
     <div class="site-title">
         <i class="fa fa-sun-o"></i> Weather Forcast
@@ -42,13 +50,18 @@
     <div class="login-container">
         <div class="close-login">&times;</div>
         <h2>Đăng nhập</h2>
-        <form id="login-form">
+        <form id="login-form" autocomplete="off">
             <label for="username">Tên đăng nhập:</label>
             <input type="text" id="username" required>
             <label for="password">Mật khẩu:</label>
             <input type="password" id="password" required>
+            <div class="remember-me">
+                <input type="checkbox" id="remember-me">
+                <label for="remember-me">Nhớ mật khẩu</label>
+            </div>
             <button type="submit">Đăng nhập</button>
         </form>
+        <div class="invalid-input-notification"></div>
         <button class="facebook-login"><i class="fab fa-facebook"></i> Đăng nhập bằng Facebook</button>
         <div id="fb-root"></div>
         <script async defer crossorigin="anonymous"
@@ -58,6 +71,7 @@
         <div class="additional-links">
             <a href="#" id="register-link">Chưa có tài khoản? Đăng ký</a>
         </div>
+
     </div>
     <script src="js/authentication.js"></script>
 </body>
