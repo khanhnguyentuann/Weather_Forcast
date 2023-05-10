@@ -21,6 +21,9 @@
             color: #fff;
         }
 
+        #email-address {
+            width: 300px;
+        }
     </style>
 </head>
 
@@ -30,8 +33,8 @@
             window.location.href = 'login.html';
     </script>
     <button class="menu-icon" onclick="toggleDropdown()">☰</button>
-    <div id="myDropdown" class="dropdown" >
-        <a href="#"  id="view-favorites">Xem ưa thích</a>
+    <div id="myDropdown" class="dropdown">
+        <a href="#" id="view-favorites">Xem ưa thích</a>
         <a href="#" id="setup-favorites">Thiết lập ưa thích</a>
         <a href="#" id="view-alerts">Xem cảnh báo</a>
         <a href="#" id="setup-alerts">Thiết lập cảnh báo</a>
@@ -77,25 +80,33 @@
         <div class="modal-content">
             <span class="close" id="setup-alerts-modal-close">&times;</span>
             <h2>Thiết lập cảnh báo thời tiết</h2>
-            <p>Chọn đất nước:</p>
-            <select id="country">
-                <option value="VietNam">Việt Nam</option>
-                <option value="Trung Quoc">Trung Quốc</option>
-                <option value="Campuchia">Campuchia</option>
-                <option value="Lao">Lào</option>
-            </select>
+
+            <p>Chọn vùng cảnh báo:</p>
+            <div style="width: 70%;">
+                <select id="country" onchange="updateCities()">
+                    <option value="QuocGia">Chọn quốc gia...</option>
+                    <option value="VietNam">Việt Nam</option>
+                    <option value="Trung Quoc">Trung Quốc</option>
+                    <option value="Campuchia">Campuchia</option>
+                    <option value="Lao">Lào</option>
+                </select>
+                <select id="city">
+                    <option>Chọn tỉnh thành...</option>
+                </select>
+            </div>
+
             <p>Chọn loại cảnh báo:</p>
             <div>
                 <input type="checkbox" id="alert-storm" name="alert-type">
-                <label for="alert-storm">Bão, giông</label>
-                <input type="number" id="alert-storm-value" placeholder="Nhập giá trị">
+                <label for="alert-storm">Bão</label>
+                <input type="number" id="alert-storm-value" placeholder="Nhập tốc độ gió...(m/s)">
+                <input type="number" id="alert-storm-value" placeholder="Nhập lượng mưa...(mm)">
             </div>
             <div>
                 <input type="checkbox" id="alert-temp" name="alert-type">
                 <label for="alert-temp">Nhiệt độ cao/thấp</label>
-                <input type="number" id="alert-temp-value" placeholder="Nhập giá trị">
+                <input type="number" id="alert-temp-value" placeholder="Nhập nhiệt độ...(℃)">
             </div>
-            <!-- Thêm các loại cảnh báo khác tương tự ở đây -->
             <p>Nhập nội dung cảnh báo:</p>
             <textarea id="alert-content" rows="4" cols="50"></textarea>
             <p>Nhập địa chỉ email để nhận cảnh báo:</p>
@@ -126,9 +137,9 @@
             <span class="close">&times;</span>
             <h2>Chia sẻ <p>Nhấn vào biểu tượng bên dưới để chia sẻ:</p>
                 <div class="share-buttons">
-                    <a href="#"><i class="fa fa-facebook"></i>Facebook</a>
-                    <a href="#"><i class="fa fa-twitter"></i>Twitter</a>
-                    <a href="#"><i class="fa fa-linkedin"></i>LinkedIn</a>
+                    <a href="#"><i class="fa-facebook"></i>Facebook</a>
+                    <a href="#"><i class="fa-twitter"></i>Twitter</a>
+                    <a href="#"><i class="fa-linkedin"></i>LinkedIn</a>
                 </div>
         </div>
     </div>
@@ -153,6 +164,33 @@
         document.getElementById('save-alerts').addEventListener('click', function () {
             alert('Chức năng đang phát triển. Vui lòng thử lại sau.');
         });
+        var cityByCountry = {
+            "QuocGia": ["Chọn tỉnh thành..."],
+            "VietNam": ["Hà Nội", "TP Hồ Chí Minh", "Đà Nẵng", "Hải Phòng"],
+            "Trung Quoc": ["Bắc Kinh", "Thượng Hải", "Quảng Châu", "Thâm Quyến"],
+            "Campuchia": ["Phnom Penh", "Siem Reap", "Battambang", "Sihanoukville"],
+            "Lao": ["Vientiane", "Luang Prabang", "Pakse", "Savannakhet"]
+        };
+
+        function updateCities() {
+            var countrySelect = document.getElementById("country");
+            var citySelect = document.getElementById("city");
+
+            var selectedCountry = countrySelect.options[countrySelect.selectedIndex].value;
+
+            while (citySelect.options.length > 0) {
+                citySelect.remove(0);
+            }
+
+            var cities = cityByCountry[selectedCountry];
+
+            if (cities) {
+                for (var i = 0; i < cities.length; i++) {
+                    var city = new Option(cities[i], i);
+                    citySelect.options.add(city);
+                }
+            }
+        }
     </script>
 </body>
 
