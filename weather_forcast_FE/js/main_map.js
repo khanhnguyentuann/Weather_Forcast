@@ -89,15 +89,14 @@ async function showWeatherPopup(lat, lon, title, marker) {
             background-color: #333;
             color: #fff;padding: 10px;
             border-radius: 12px;
-            border: 2px solid blue;
             font-family: cursive;">${title} ${data.name}</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Vĩ độ: ${lat}</p>
-                <p><i class="fas fa-map-marker-alt"></i> Kinh độ: ${lon}</p>
-                <p><i class="fas fa-wind"></i> Tốc độ gió: ${wind_speed}</p>
-                <p><i class="fas fa-tint"></i> Lượng mưa 1h: ${rain_1h}</p>
-                <p><i class="fas fa-thermometer-half"></i> Nhiệt độ: ${temperature}</p>
-                <p><i class="fas fa-cloud"></i> Mây che phủ: ${clouds}</p>
-                <p><i class="fas fa-tachometer-alt"></i> Áp suất không khí: ${air_pressure}</p>
+                <p><i class="fas fa-map-marker-alt" >  </i>  Vĩ độ: ${lat}</p>
+                <p><i class="fas fa-map-marker-alt" >  </i>  Kinh độ: ${lon}</p>
+                <p><i class="fas fa-wind">            </i>  Tốc độ gió: ${wind_speed}</p>
+                <p><i class="fas fa-tint">            </i>  Lượng mưa 1h: ${rain_1h}</p>
+                <p><i class="fas fa-thermometer-half"></i>  Nhiệt độ: ${temperature}</p>
+                <p><i class="fas fa-cloud">           </i>  Mây che phủ: ${clouds}</p>
+                <p><i class="fas fa-tachometer-alt">  </i>  Áp suất không khí: ${air_pressure}</p>
             </div>
         `;
 
@@ -180,54 +179,9 @@ async function showWeatherForecast(lat, lon) {
                 <button class='close-button'>&times;</button>
         `;
 
-        const currentDate = new Date();
-        const currentTime = currentDate.getTime();
-
-        // Chuyển về múi giờ Hà Nội (UTC+7)
-        const timezoneOffset = 7 * 60 * 60 * 1000;
-        currentDate.setTime(currentTime + timezoneOffset);
-
-        const currentHour = currentDate.getHours();
-
-        // gán startHour bằng 12 khi giờ hiện tại nhỏ hơn 12
-        let startHour = currentHour < 12 ? 12 : 0;
-
-        let startTimestamp = currentDate.setHours(startHour, 0, 0, 0);
-
-        // Nếu mốc thời gian đầu tiên là 12h, thì giữ nguyên ngày hiện tại, ngược lại thì tăng lên 1 ngày
-        if (startHour == 0) {
-            currentDate.setDate(currentDate.getDate() + 1);
-        }
-
-        startTimestamp = currentDate.getTime();
-
-        const endTimestamp = startTimestamp + (7 * 12 * 60 * 60 * 1000);
-
-        let displayedForecasts = 0;
-        for (let i = 0; i < data.list.length && displayedForecasts < 7; i++) {
+        for (let i = 0; i < data.list.length; i += 8) {
             const forecast = data.list[i];
-            const forecastDateTime = new Date(forecast.dt * 1000);
-            // Chuyển về múi giờ Hà Nội (UTC+7) cho thời gian dự báo
-            forecastDateTime.setTime(forecastDateTime.getTime() + timezoneOffset);
-            const forecastTimestamp = forecastDateTime.getTime();
-
-            if (forecastTimestamp < startTimestamp || forecastTimestamp > endTimestamp) {
-                continue;
-            }
-
-            // Cập nhật mốc thời gian tiếp theo cách mốc hiện tại 12 tiếng
-            startTimestamp += 12 * 60 * 60 * 1000;
-
-            const date = forecastDateTime.toLocaleDateString('vi-VN', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-            });
-            const time = forecastDateTime.toLocaleTimeString('vi-VN', {
-                hour: '2-digit',
-                minute: '2-digit',
-            });
-
+            const date = new Date(forecast.dt * 1000).toLocaleDateString();
             const temperature = forecast.main.temp ? forecast.main.temp + " °C" : "N/A";
             const rain_3h = forecast.rain && forecast.rain['3h'] ? forecast.rain['3h'] + " mm" : "N/A";
             const wind_speed = forecast.wind.speed ? forecast.wind.speed + " m/s" : "N/A";
@@ -240,7 +194,7 @@ async function showWeatherForecast(lat, lon) {
 
             forecastHTML += `
                 <div class='forecast-item'>
-                    <h4>${data.city.name} - ${time} - ${date}</h4>
+                    <h4>Dự báo thời tiết: ${date}</h4>
                     <span>
                         <img src="${weatherIcon}" alt="${weatherDescription}" width="50" height="50" />
                         <span>${weatherDescription}</span>
@@ -250,10 +204,7 @@ async function showWeatherForecast(lat, lon) {
                     <p style="text-align: left;padding-left: 20px;">${windIcon}   Tốc độ gió: ${wind_speed}</p>
                 </div>
             `;
-
-            displayedForecasts++;
         }
-
         forecastHTML += "</div>";
 
         const forecastElement = document.getElementById("forecast");
@@ -267,4 +218,3 @@ async function showWeatherForecast(lat, lon) {
         });
     }
 }
-

@@ -28,7 +28,8 @@ html {
 }
 
 /* Thêm CSS cho menu dropdown */
-.dropdown {
+
+ .dropdown {
   position: fixed;
   top: 50px;
   left: 10px;
@@ -49,7 +50,7 @@ html {
 .dropdown a:hover {
   background-color: #ddd;
   color: #333;
-}
+} 
 
 .search-icon {
   position: absolute;
@@ -233,7 +234,6 @@ html {
   top: 10px;
   right: 150px;
   font-size: 25px;
-  background-color: #ace3a8;
   z-index: 5;
 }
 
@@ -333,11 +333,6 @@ html {
   font-size: 20px;
 }
 
-.remember-me {
-  display: flex;
-  align-items: center;
-}
-
-.remember-me input[type="checkbox"] {
-  margin-right: 5px;
+.menu-icon{
+  cursor: pointer;
 }
