@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/128/1163/1163661.png" type="image/x-icon">
     <title>Weather Forecast</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/weather_favorites.css">
@@ -19,6 +20,7 @@
             background-color: #333;
             color: #fff;
         }
+
     </style>
 </head>
 
@@ -28,8 +30,8 @@
             window.location.href = 'login.html';
     </script>
     <button class="menu-icon" onclick="toggleDropdown()">☰</button>
-    <div id="myDropdown" class="dropdown">
-        <a href="#" id="view-favorites">Xem ưa thích</a>
+    <div id="myDropdown" class="dropdown" >
+        <a href="#"  id="view-favorites">Xem ưa thích</a>
         <a href="#" id="setup-favorites">Thiết lập ưa thích</a>
         <a href="#" id="view-alerts">Xem cảnh báo</a>
         <a href="#" id="setup-alerts">Thiết lập cảnh báo</a>
@@ -110,7 +112,7 @@
     <div id="forecast" style="display:none"></div>
     <div class="share-icon"><i class="fa fa-share"></i></div>
     <div class="site-title"><i class="fa fa-sun-o"></i>Weather Forcast</div>
-    <div class="welcome-container">Xin chào, <span id="current-user">Người dùng</span>!</div>
+    <div class="welcome-container">Xin chào, <span id="current-user" style="font-weight: bold">Người dùng</span>!</div>
     <div class="logout-btn" id="logout-btn">Log Out <i class="fa fa-sign-out"></i></div>
     <div class="layer-panel">
         <div class="layer-item" id="wind"><i class="fas fa-wind"></i>Wind</div>

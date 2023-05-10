@@ -89,15 +89,14 @@ async function showWeatherPopup(lat, lon, title, marker) {
             background-color: #333;
             color: #fff;padding: 10px;
             border-radius: 12px;
-            border: 2px solid blue;
             font-family: cursive;">${title} ${data.name}</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Vĩ độ: ${lat}</p>
-                <p><i class="fas fa-map-marker-alt"></i> Kinh độ: ${lon}</p>
-                <p><i class="fas fa-wind"></i> Tốc độ gió: ${wind_speed}</p>
-                <p><i class="fas fa-tint"></i> Lượng mưa 1h: ${rain_1h}</p>
-                <p><i class="fas fa-thermometer-half"></i> Nhiệt độ: ${temperature}</p>
-                <p><i class="fas fa-cloud"></i> Mây che phủ: ${clouds}</p>
-                <p><i class="fas fa-tachometer-alt"></i> Áp suất không khí: ${air_pressure}</p>
+                <p><i class="fas fa-map-marker-alt" >  </i>  Vĩ độ: ${lat}</p>
+                <p><i class="fas fa-map-marker-alt" >  </i>  Kinh độ: ${lon}</p>
+                <p><i class="fas fa-wind">            </i>  Tốc độ gió: ${wind_speed}</p>
+                <p><i class="fas fa-tint">            </i>  Lượng mưa 1h: ${rain_1h}</p>
+                <p><i class="fas fa-thermometer-half"></i>  Nhiệt độ: ${temperature}</p>
+                <p><i class="fas fa-cloud">           </i>  Mây che phủ: ${clouds}</p>
+                <p><i class="fas fa-tachometer-alt">  </i>  Áp suất không khí: ${air_pressure}</p>
             </div>
         `;
 

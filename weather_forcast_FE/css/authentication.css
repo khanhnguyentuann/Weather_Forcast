@@ -48,19 +48,20 @@ html {
 
 .login-container {
     background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Chỉnh độ rộng của container */
-    background-color: #fff; /* Nền màu trắng cho container */
-    position: absolute; /* Chỉnh vị trí tuyệt đối */
-    top: 50%; /* Đặt container ở giữa theo chiều dọc */
-    left: 50%; /* Đặt container ở giữa theo chiều ngang */
-    transform: translate(-50%, -50%); /* Đảm bảo container ở chính giữa */
+    padding: 56px;
+    border-radius: 36px;
+    box-shadow: 0 0 10px;
+    width: 290px;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .login-container h2 {
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .login-container form {
@@ -74,23 +75,31 @@ html {
 }
 
 .login-container input {
-    margin-bottom: 15px;
-    padding: 5px;
-    border: 1px solid #ddd;
+    margin-bottom: 30px;
+    padding: 11px;
+    border: 1px solid #000000;
     border-radius: 3px;
+}
+.login-container input:placeholder-shown {
+    color: red;
 }
 
 .login-container button {
     color: #fff;
-    padding: 5px 10px;
-    border-radius: 3px;
-    border: none;
+    /* padding: 5px 10px; */
+    border-radius: 5px ;
+    border-color: black;
     cursor: pointer;
     width: 100%;
 }
 
 .login-container button[type="submit"] {
     background-color: #333;
+    padding: 10px;
+}
+.login-container button[type="submit"]:hover {
+    background-color: rgba(55, 52, 52, 0.897);
+    color: #ffff;
 }
 
 .facebook-login {
